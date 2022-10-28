@@ -1,0 +1,103 @@
+GENERAL:
+  task: train
+  manual_seed: 123
+  model_dir: model/semseg/semseg.py
+  dataset_dir: data/semantic_kitti.py
+
+DATA:
+  data_root: dataset
+  dataset: semantic_kitti
+
+  input_channel: 1
+  classes: 19
+  ignore_label: -1
+
+  point_cloud_range: [ -51.2, -51.2, -4, 51.2, 51.2, 2.4 ]
+  voxel_size: [ 0.1, 0.1, 0.1 ]
+
+  train_flip: True
+  train_rot: True
+  train_scale: True
+  train_fan_crop: True
+
+STRUCTURE:
+  model_name: semantic_semi
+  m: 32
+  block_residual: True
+  block_reps: 2
+  downsample_padding: 1
+
+  embed_m: 32
+
+TRAIN:
+  iters: 18000
+  train_workers: 2 # data loader workers
+  optim: Adam # Adam or SGD
+  lr: 0.002
+  momentum: 0.9
+  weight_decay: 0.0001
+
+  save_freq: 100
+  keep_freq: 1000
+  keep_last_ratio: 0.96
+  eval_freq: 1000
+  eval_last_ratio: 0.96
+
+  batch_size: 24
+
+  pretrain_path: exp/semantic_kitti/semantic_semi/semseg_run1_10_pretrain_semantickitti/semseg_run1_10_pretrain_semantickitti-000016000.pth
+  pretrain_module: ['backbone', 'classifier']
+
+  validation: True
+
+  scheduler: OneCycleLR # OneCycleLR or PolyLR
+  # OneCycleLR
+  oc_max_lr: 0.002
+  oc_pct_start: 0.2
+  oc_anneal_strategy: cos
+  oc_div_factor: 10.0
+  oc_final_div_factor: 10000.0
+
+UNSUP:
+  semi: True
+  labeled_ratio: 0.1
+
+  prepare_iter: 0
+
+  # data
+  crop_angle_range: [120.0, 360.0]
+  crop_max_iters: 50
+  crop_return_ori: True
+
+  # loss
+  num_pos_sample: 1000
+  num_neg_sample: 10000
+  bank_length: 10000
+  max_num_enqueue_per_class: 1000
+  conf_thresh: 0.75
+
+  temp: 0.1
+  mem_batch_size: 200
+
+  loss_weight: [1.0, 0.1] # sup_loss, unsup_loss
+
+  use_log_loss_weights: True
+  loss_weights_classes: [ 3.1557,  8.7029,  7.8281,  6.1354,  6.3161,  7.9937,  8.9704,
+                          10.1922,  1.6155,  4.2187,  1.9385,  5.5455,  2.0198,  2.6261,  1.3212,
+                          5.1102,  2.5492,  5.8585,  7.3929]    # class weights for semantic KITTI
+
+  use_ce_thresh: True
+  ce_thresh: 0.9
+  ce_steps: 6000
+
+TEST:
+  split: valid
+  test_reps: 3
+  test_iter: 18000
+  test_workers: 2
+
+  eval: True
+  save_semantic: False
+
+DISTRIBUTE:
+  sync_bn: True

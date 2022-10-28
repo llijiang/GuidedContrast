@@ -1,0 +1,90 @@
+GENERAL:
+  task: train
+  manual_seed: 123
+  model_dir: model/semseg/semseg.py
+  dataset_dir: data/scannetv2.py
+
+DATA:
+  data_root: dataset
+  dataset: scannetv2
+  cache: True
+
+  input_channel: 3
+  classes: 20
+  ignore_label: -100
+
+  scale: 50
+  full_scale: [64, 512]
+
+  train_flip: True
+  train_rot: True
+  train_jit: True
+  train_elas: True
+
+STRUCTURE:
+  model_name: semantic_semi
+  m: 32
+  block_residual: True
+  block_reps: 2
+  downsample_padding: 1
+
+  embed_m: 32
+
+TRAIN:
+  iters: 36000
+  train_workers: 2 # data loader workers
+  optim: SGD # Adam or SGD
+  lr: 0.2
+  momentum: 0.9
+  weight_decay: 0.0001
+
+  save_freq: 50
+  keep_freq: 1000
+  keep_last_ratio: 0.95
+  eval_freq: 1000
+  eval_last_ratio: 0.95
+
+  batch_size: 16
+
+  pretrain_path:
+  pretrain_module: []
+
+  validation: True
+
+  scheduler: PolyLR
+  # PolyLR
+  poly_power: 0.9
+
+UNSUP:
+  semi: True
+  labeled_ratio: 0.4
+
+  prepare_iter: 200
+
+  # data
+  crop_size: [3.5, 3.5]
+  crop_max_iters: 50
+
+  # loss
+  num_pos_sample: 1000
+  num_neg_sample: 10000
+  bank_length: 10000
+  max_num_enqueue_per_class: 1000
+  conf_thresh: 0.75
+
+  temp: 0.1
+  mem_batch_size: 1000
+
+  loss_weight: [1.0, 0.1] # sup_loss, unsup_loss
+
+TEST:
+  split: val
+  test_reps: 3
+  test_iter: 36000
+  test_workers: 2
+
+  eval: True
+  save_semantic: False
+
+DISTRIBUTE:
+  sync_bn: True

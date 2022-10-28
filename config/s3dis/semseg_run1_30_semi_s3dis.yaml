@@ -1,0 +1,99 @@
+GENERAL:
+  task: train
+  manual_seed: 123
+  model_dir: model/semseg/semseg.py
+  dataset_dir: data/s3dis.py
+
+DATA:
+  data_root: dataset
+  dataset: s3dis
+  cache: True
+
+  test_area: Area_5
+  train_area: Area_[1-4,6]
+
+  input_channel: 3
+  classes: 13
+  ignore_label: -100
+
+  scale: 50
+  full_scale: [64, 512]
+
+  train_flip: True
+  train_rot: True
+  train_jit: True
+  train_elas: True
+  train_subsample: True
+  subsample_voxel_size: 0.015
+
+STRUCTURE:
+  model_name: semantic_semi
+  m: 32
+  block_residual: True
+  block_reps: 2
+  downsample_padding: 1
+
+  embed_m: 32
+
+TRAIN:
+  iters: 8000
+  train_workers: 2 # data loader workers
+  optim: Adam # Adam or SGD
+  lr: 0.02
+  momentum: 0.9
+  weight_decay: 0.0001
+
+  save_freq: 50
+  keep_freq: 250
+  keep_last_ratio: 0.96
+  eval_freq: 250
+  eval_last_ratio: 0.96
+
+  batch_size: 16
+
+  pretrain_path:
+  pretrain_module: []
+
+  validation: True
+
+  scheduler: OneCycleLR
+  # OneCycleLR
+  oc_max_lr: 0.02
+  oc_pct_start: 0.4
+  oc_anneal_strategy: cos
+  oc_div_factor: 10.0
+  oc_final_div_factor: 10000.0
+
+UNSUP:
+  semi: True
+  labeled_ratio: 0.3
+
+  prepare_iter: 50
+
+  # data
+  crop_size: [3.5, 3.5]
+  crop_max_iters: 50
+
+  # loss
+  num_pos_sample: 1000
+  num_neg_sample: 10000
+  bank_length: 10000
+  max_num_enqueue_per_class: 1000
+  conf_thresh: 0.75
+
+  temp: 0.1
+  mem_batch_size: 500
+
+  loss_weight: [1.0, 0.1] # sup_loss, unsup_loss
+
+TEST:
+  split: val
+  test_reps: 3
+  test_iter: 8000
+  test_workers: 2
+
+  eval: True
+  save_semantic: False
+
+DISTRIBUTE:
+  sync_bn: True
