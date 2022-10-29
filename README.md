@@ -159,14 +159,14 @@ Models trained with this repo are listed below (metric: mIoU). Four GPUs are app
 ### ScanNet
 |          |   5%   |  10%  |  20%  |  30%  |  40%  |                                              Models                                              |
 |:--------:|:------:|:-----:|:-----:|:-----:|:-----:|:------------------------------------------------------------------------------------------------:|
-| Sup-only | 49.13  | 58.01 | 64.30 | 67.05 | 69.44 | [download](https://drive.google.com/drive/folders/1YXgDC68FmwCbihJdYso67Bfh4M1sxYct?usp=sharing) |
-| Semi-sup | 55.42  | 62.17 | 67.02 | 69.46 | 71.50 | [download](https://drive.google.com/drive/folders/17j0oox0xeVdIR9rH2NMgWeSEC5SJSRBw?usp=sharing) |
+| Sup-only | 49.13  | 58.01 | 64.30 | 67.05 | 69.44 | [download](https://drive.google.com/drive/folders/1Cnv5B8z1u1RAD_gbIhCqsobywV8VzSNk?usp=sharing) |
+| Semi-sup | 55.42  | 62.17 | 67.02 | 69.46 | 71.50 | [download](https://drive.google.com/drive/folders/1wsnFks8TiJjZrgnpoJBS1rHvuk3nhIfs?usp=sharing) |
 
 ### S3DIS
 |          |  5%   |  10%  |  20%  |  30%  |  40%  |                                              Models                                              |
 |:--------:|:-----:|:-----:|:-----:|:-----:|:-----:|:------------------------------------------------------------------------------------------------:|
-| Sup-only | 45.73 | 53.39 | 58.34 | 61.41 | 61.69 | [download](https://drive.google.com/drive/folders/1Cnv5B8z1u1RAD_gbIhCqsobywV8VzSNk?usp=sharing) |
-| Semi-sup | 53.20 | 56.64 | 63.67 | 64.95 | 65.32 | [download](https://drive.google.com/drive/folders/1wsnFks8TiJjZrgnpoJBS1rHvuk3nhIfs?usp=sharing) |
+| Sup-only | 45.73 | 53.39 | 58.34 | 61.41 | 61.69 | [download](https://drive.google.com/drive/folders/1YXgDC68FmwCbihJdYso67Bfh4M1sxYct?usp=sharing) |
+| Semi-sup | 53.20 | 56.64 | 63.67 | 64.95 | 65.32 | [download](https://drive.google.com/drive/folders/17j0oox0xeVdIR9rH2NMgWeSEC5SJSRBw?usp=sharing) |
 
 ### SemanticKITTI
 |          |  5%   |  10%  |  20%  |  30%  |  40%  |                                              Models                                              |
